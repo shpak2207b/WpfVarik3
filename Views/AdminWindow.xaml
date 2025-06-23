@@ -1,0 +1,50 @@
+﻿<Window x:Class="WpfVarik3.Views.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfVarik3.Views"
+        mc:Ignorable="d"
+        Title="AdminWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Grid.Row="0" x:Name="InventoryGrid" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="id" Binding="{Binding InventoryNumber}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                <DataGridTextColumn Header="PublicationDate" Binding="{Binding PublicationDate}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}"/>
+                <DataGridTextColumn Header="User" Binding="{Binding User.Login}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="0" x:Name="UserGrid" Grid.Column="1" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Login" Binding="{Binding Login}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Margin="10, 0, 10, 0" x:Name="TakeButton" Content="Взять" Click="TakeButton_Click"/>
+            <Button Margin="10, 0, 10, 0" x:Name="ReturnButton" Content="Списать" Click="ReturnButton_Click"/>
+            <Button Margin="10, 0, 10, 0" x:Name="AddButton" Content="Добавить" Click="AddButton_Click"/>
+            <Button Margin="10, 0, 10, 0" x:Name="EditButton" Content="Редактировать" Click="EditButton_Click"/>
+            <Button Margin="10, 0, 10, 0" x:Name="DeleteButton" Content="Удалить" Click="DeleteButton_Click"/>
+            
+        </StackPanel>
+    </Grid>
+    
+</Window>
