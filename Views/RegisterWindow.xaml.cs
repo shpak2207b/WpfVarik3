@@ -30,13 +30,11 @@ namespace WpfVarik3.Views
         {
             var login = LoginBox.Text.Trim();  
             var password = PasswordBox.Text.Trim();
-            var name = NameBox.Text.Trim();
-            var surname = SurnameBox.Text.Trim();
-            var phone = PhoneBox.Text.Trim();
+
 
             if(String.IsNullOrWhiteSpace(login) || String.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Введите данные");
+                MessageBox.Show("Заполнмите все поля");
                 return;
             }
             if(_db.Users.Any(u => u.Login == login))
@@ -45,13 +43,12 @@ namespace WpfVarik3.Views
             }
             var newUser = new User
             {
-                Login = login, 
+                Login = login,
                 Password = password,
-                RegistrationDate = DateOnly.FromDateTime(DateTime.Today),
-                Name = name,
-                Surname = surname,
-                PhoneNumber = phone,
-                RoleId = 1
+                CreatedDate = DateTime.Now,
+                Name = login,
+                Role = "user"
+
             };
             _db.Users.Add(newUser);
             _db.SaveChanges();

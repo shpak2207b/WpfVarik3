@@ -32,64 +32,39 @@ namespace WpfVarik3.Views
 
         private void LoadData()
         {
-            InventoryGrid.ItemsSource = _db.Inventories.Include(i => i.User).ToList();
-            UserGrid.ItemsSource = _db.Users.Include(u => u.Role).ToList();
+            ProductsGrid.ItemsSource = _db.Products
+                .Include(p => p.Category)
+                .Include(p => p.Supplier)
+                .ToList();
         }
 
-        private Inventory? SelectedInventory => InventoryGrid.SelectedItem as Inventory;
-        private User? SelectedUser => UserGrid.SelectedItem as User;
+        private Product? SelectedProduct => ProductsGrid.SelectedItem as Product;
 
-        private void TakeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedInventory == null || SelectedUser == null)
-            {
-                MessageBox.Show("Выберите инвентарь и пользователя");
-                return;
-            }
-            SelectedInventory.UserId = SelectedUser.Id;
-            SelectedInventory.Status = Status.Given;
-            _db.SaveChanges();
-            LoadData();
-
-        }
-
-        private void ReturnButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (SelectedInventory == null)
-            {
-                MessageBox.Show("Выберите машинк");
-                return;
-            }
-
-            SelectedInventory.UserId = null;
-            SelectedInventory.Status = Status.InStock;
-            _db.SaveChanges();
-            LoadData();
-
-        }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            var wnd = new AddWindow();
+            var wnd = new AddEditWindow();
             wnd.ShowDialog();
             LoadData();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedInventory == null)
+            if (SelectedProduct == null)
             {
-                MessageBox.Show("Выберите инвентарь");
+                MessageBox.Show("Выберите товар");
                 return;
             }
-            var wnd = new EditWindow(SelectedInventory);
+            var wnd = new AddEditWindow(SelectedProduct);
             wnd.ShowDialog();
+
+            _db.Entry(SelectedProduct).Reload(); //важно лдя обновления грида!!
             LoadData();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedInventory == null)
+            if (SelectedProduct == null)
             {
                 MessageBox.Show("Выберите запись для удаления!");
                 return;
@@ -103,12 +78,19 @@ namespace WpfVarik3.Views
 
             if (result == MessageBoxResult.Yes)
             {
-                _db.Inventories.Remove(SelectedInventory);
+                _db.Products.Remove(SelectedProduct);
                 _db.SaveChanges();
 
                 MessageBox.Show("Запись удалена!");
                 LoadData(); // Обновляем таблицу
             }
+        }
+
+        private void OrdersButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new OrdersWindow(_currentUser);
+            window.Show();
+            Close();
         }
     }
 }

@@ -33,13 +33,13 @@ namespace WpfVarik3.Views
         {
             var login = LoginTextBox.Text;
             var password = PasswordTextBox.Text;
-            var user = _db.Users.Include(u => u.Role).FirstOrDefault(u => u.Login == login && u.Password == password);
+            var user = _db.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
             if (user == null)
             {
-                MessageBox.Show("idi nahu1");
+                MessageBox.Show("неверный логин или пароль");
                 return;
             }
-            if (user.Role.Name == "Admin")
+            if (user.Role == "admin")
             {
                 var window = new AdminWindow(user);
                 window.Show();
@@ -56,5 +56,16 @@ namespace WpfVarik3.Views
                 var window = new RegisterWindow();
                 window.Show();
             }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GuestLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new UserWindow();
+            window.Show();
+        }
     }
 }

@@ -15,8 +15,10 @@
         <StackPanel Grid.Row="1">
             <TextBox Margin="0, 10, 0, 0" Text="Логин" x:Name="LoginTextBox"></TextBox>
             <TextBox Margin="0, 10, 0, 0" Text="Пароль" x:Name="PasswordTextBox"></TextBox>
-            <Button Margin="0, 10, 0, 0" Content="Login" Click="LoginButton_Click"></Button>
-            <Button Margin="0, 10, 0, 0" Content="Register" Click="RegisterButton_Click"></Button>
+            <Button Margin="0, 10, 0, 0" Content="Вход" Click="LoginButton_Click"></Button>
+            <Button Margin="0, 10, 0, 0" Content="Регистрация" Click="RegisterButton_Click"></Button>
+            <Button Margin="0, 10, 0, 0" Content="Войти как гость" Click="GuestLoginButton_Click"></Button>
+ 
         </StackPanel>
     </Grid>
 
